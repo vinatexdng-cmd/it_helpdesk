@@ -43,6 +43,7 @@
   line-height: 1.5;
 }
 
+
 /* Thanh Bộ Lọc */
 .queue-filters-card {
   background-color: #FFFFFF;
@@ -67,7 +68,7 @@
 
 @media (min-width: 1024px) {
   .filters-row {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
 }
 

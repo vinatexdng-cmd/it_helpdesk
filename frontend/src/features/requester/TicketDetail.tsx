@@ -262,15 +262,25 @@ export const TicketDetail: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await ticketService.escalateTicket(Number(id), escalateReason, escalateStepsTried);
-      if (response.success) {
-        alert('Đã chuyển cấp lên tuyến hỗ trợ L2 thành công!');
+      // Đảm bảo truyền đúng cấu trúc key Backend yêu cầu: ly_do, ly_do_chuyen_cap và cac_buoc_da_thu
+      const payload = {
+        ly_do: escalateReason,
+        ly_do_chuyen_cap: escalateReason,
+        cac_buoc_da_thu: escalateStepsTried
+      };
+      
+      // Gọi trực tiếp endpoint thật của Backend: axiosInstance.post(`/tickets/${id}/escalate`, payload)
+      const response = await axiosInstance.post(`/tickets/${id}/escalate`, payload);
+
+      if (response.status === 200 || response.data?.success) {
+        alert('Chuyển cấp sự cố lên Tuyến 2 thành công!');
         setShowEscalateModal(false);
         setEscalateReason('');
         setEscalateStepsTried('');
-        await loadTicketData();
+        // Chuyển hướng kỹ thuật viên L1 quay trở về trang Hàng đợi xử lý phiếu
+        navigate('/tickets/queue');
       } else {
-        setModalError(response.message || 'Chuyển cấp thất bại.');
+        setModalError(response.data?.message || 'Chuyển cấp thất bại.');
       }
     } catch (err: any) {
       console.error(err);
