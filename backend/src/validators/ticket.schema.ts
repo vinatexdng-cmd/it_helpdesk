@@ -27,10 +27,10 @@ export const getTicketsQuerySchema = z.object({
     .transform(val => (val ? Number(val) : 1))
     .pipe(z.number().min(1, 'Số trang (page) không được nhỏ hơn 1')),
     
-  // Kiểm soát nghiêm ngặt limit: ép về Number, giá trị nằm trong khoảng từ 1 đến 100 bản ghi
+  // Kiểm soát nghiêm ngặt limit: ép về Number, giá trị nằm trong khoảng từ 1 đến 1000 bản ghi
   limit: z.string().optional()
-    .transform(val => (val ? Number(val) : 10))
-    .pipe(z.number().min(1, 'Số lượng dòng (limit) phải lớn hơn hoặc bằng 1').max(100, 'Không được lấy quá 100 dòng một lần')),
+    .transform(val => (val ? Number(val) : 100))
+    .pipe(z.number().min(1, 'Số lượng dòng (limit) phải lớn hơn hoặc bằng 1').max(1000, 'Không được lấy quá 1000 dòng một lần')),
   
   trang_thai: z.enum(Object.values(TrangThaiPhieu) as [string, ...string[]], {
     message: 'Trạng thái lọc dữ liệu không đúng định dạng'

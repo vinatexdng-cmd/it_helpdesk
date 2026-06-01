@@ -71,7 +71,7 @@ export const TicketQueue: React.FC = () => {
   const loadTickets = async () => {
     setIsLoading(true);
     try {
-      const response = await ticketService.getTickets();
+      const response = await ticketService.getTickets({ limit: 100 });
       if (response.success && Array.isArray(response.data)) {
         setTickets(response.data.map(mapBackendTicket));
       }

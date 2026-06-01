@@ -486,7 +486,7 @@ export const AdminDashboard: React.FC = () => {
 
   const fetchTickets = async () => {
     try {
-      const res = await ticketService.getTickets();
+      const res = await ticketService.getTickets({ limit: 100 });
       if (res.success && res.data) {
         setTickets(res.data);
       }

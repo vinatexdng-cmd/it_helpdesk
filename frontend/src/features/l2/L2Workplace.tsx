@@ -110,7 +110,7 @@ export const L2Workplace: React.FC = () => {
   const fetchTickets = async () => {
     try {
       setLoading(true);
-      const res = await ticketService.getTickets();
+      const res = await ticketService.getTickets({ limit: 100 });
       if (res.success && res.data) {
         const l2Tickets = res.data
           .filter(t => t.nhom_xu_ly?.ten_nhom?.toLowerCase().includes('l2') || t.nhom_xu_ly_id === 2)
